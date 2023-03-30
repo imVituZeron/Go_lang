@@ -17,5 +17,15 @@ func main() {
 
 	var command int
 	fmt.Scan(&command)
-	fmt.Println("O comando escolhido foi ", command)
+	fmt.Println("O comando escolhido foi", command)
+
+	if command == 1 {
+		fmt.Println(" Monitorando")
+	} else if command == 2 {
+		fmt.Println(" Exibindo logs")
+	} else if command == 0 {
+		fmt.Println(" Saindo")
+	} else {
+		fmt.Println("Não conheço este comando!")
+	}
 }
