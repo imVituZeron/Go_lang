@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"os"
 )
 
@@ -9,11 +10,13 @@ func main() {
 
 	intro()
 	showMenu()
+	//	fmt.Println(devolveNomeIdade())
+
 	command := readCommand()
 
 	switch command {
 	case 1:
-		fmt.Println("Monitorando")
+		initMonitorin()
 	case 2:
 		fmt.Println("Exibindo logs")
 	case 0:
@@ -24,6 +27,12 @@ func main() {
 		os.Exit(-1)
 	}
 }
+
+//func devolveNomeIdade() (string, int) {
+//	name := "VItor"
+//	idade := 23
+//	return name, idade
+//}
 
 func intro() {
 	name := "Vitor"
@@ -45,4 +54,10 @@ func readCommand() int {
 	fmt.Println("O comando escolhido foi", readedCommand)
 
 	return readedCommand
+}
+
+func initMonitorin() {
+	fmt.Println("Monitorando")
+	site := "https://www.alura.com.br"
+	fmt.Println(http.Get(site))
 }
