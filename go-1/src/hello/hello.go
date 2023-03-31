@@ -10,13 +10,11 @@ func main() {
 
 	intro()
 	showMenu()
-	//	fmt.Println(devolveNomeIdade())
-
 	command := readCommand()
 
 	switch command {
 	case 1:
-		initMonitorin()
+		initMonitoring()
 	case 2:
 		fmt.Println("Exibindo logs")
 	case 0:
@@ -27,12 +25,6 @@ func main() {
 		os.Exit(-1)
 	}
 }
-
-//func devolveNomeIdade() (string, int) {
-//	name := "VItor"
-//	idade := 23
-//	return name, idade
-//}
 
 func intro() {
 	name := "Vitor"
@@ -56,8 +48,9 @@ func readCommand() int {
 	return readedCommand
 }
 
-func initMonitorin() {
+func initMonitoring() {
 	fmt.Println("Monitorando")
 	site := "https://www.alura.com.br"
-	fmt.Println(http.Get(site))
+	resp, _ := http.Get(site)
+	fmt.Println(resp)
 }
