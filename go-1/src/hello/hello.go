@@ -26,7 +26,6 @@ func main() {
 			os.Exit(-1)
 		}
 	}
-
 }
 
 func intro() {
@@ -38,9 +37,11 @@ func intro() {
 }
 
 func showMenu() {
-	fmt.Println("1 - Iniciar MOnitoramento")
+	fmt.Println("---------------------------")
+	fmt.Println("1 - Iniciar Monitoramento")
 	fmt.Println("2 - Exibir logs")
 	fmt.Println("0 - Sair")
+	fmt.Println("---------------------------")
 }
 
 func readCommand() int {
@@ -52,14 +53,18 @@ func readCommand() int {
 }
 
 func initMonitoring() {
-	fmt.Println("Monitorando")
-	//site := "https://www.alura.com.br"
-	site := "https://random-status-code.herokuapp.com/"
-	resp, _ := http.Get(site)
+	fmt.Println("---------------------------")
+	fmt.Println("Monitorando.....")
+	sites := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.caelum.com.br", "https://www.uol.com.br"}
 
-	if resp.StatusCode == 200 {
-		fmt.Println("site:", site, "foi carregado com sucesso!")
-	} else {
-		fmt.Println("O site", site, "esta com problemas. Status code:", resp.StatusCode)
+	for _, content := range sites {
+		resp, _ := http.Get(content)
+
+		if resp.StatusCode == 200 {
+			fmt.Println("O site:", content, "foi carregado com sucesso!")
+		} else {
+			fmt.Println("O site", content, "esta com problemas. Status code:", resp.StatusCode)
+		}
 	}
+	fmt.Println("---------------------------")
 }
