@@ -13,6 +13,7 @@ const delay = 5
 func main() {
 
 	intro()
+	readSitesFile()
 	for {
 		showMenu()
 		command := readCommand()
@@ -59,7 +60,9 @@ func readCommand() int {
 func initMonitoring() {
 	fmt.Println("---------------------------")
 	fmt.Println("Monitorando.....")
-	sites := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.caelum.com.br", "https://www.uol.com.br"}
+	//sites := []string{"https://www.alura.com.br", "https://random-status-code.herokuapp.com/", "https://www.caelum.com.br", "https://www.uol.com.br"}
+
+	sites := readSitesFile()
 
 	for i := 0; i < monitoramentos; i++ {
 		for _, content := range sites {
@@ -72,11 +75,27 @@ func initMonitoring() {
 }
 
 func testSite(site string) {
-	resp, _ := http.Get(site)
+	resp, err := http.Get(site)
+
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
 
 	if resp.StatusCode == 200 {
 		fmt.Println("O site:", site, "foi carregado com sucesso!")
 	} else {
 		fmt.Println("O site", site, "esta com problemas. Status code:", resp.StatusCode)
 	}
+}
+
+func readSitesFile() []string {
+
+	var sites []string
+	file, err := os.Open("site.txt")
+	if err != nil {
+		fmt.Println("Ocorreu um erro:", err)
+	}
+	fmt.Println(file)
+
+	return sites
 }
