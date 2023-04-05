@@ -1,4 +1,4 @@
-www.alura.com.br
-www.globo.com.br
-www.caelum.com.br
-www.casadocodigo.com.br
+https://www.alura.com.br
+https://www.google.com.br
+https://www.caelum.com.br
+https://www.casadocodigo.com.br

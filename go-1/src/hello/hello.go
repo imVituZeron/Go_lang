@@ -1,9 +1,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
+	"strings"
 	"time"
 )
 
@@ -13,7 +16,6 @@ const delay = 5
 func main() {
 
 	intro()
-	readSitesFile()
 	for {
 		showMenu()
 		command := readCommand()
@@ -92,10 +94,25 @@ func readSitesFile() []string {
 
 	var sites []string
 	file, err := os.Open("site.txt")
+
 	if err != nil {
 		fmt.Println("Ocorreu um erro:", err)
 	}
-	fmt.Println(file)
+
+	leitor := bufio.NewReader(file) // pegando o arquivo e criando um leito para ela.
+	for {
+		linha, err_leitor := leitor.ReadString('\n') // pegando linha por linha do leitor separadas por \n
+		linha = strings.TrimSpace(linha)             // tirando os \n nos finais das linhas
+
+		sites = append(sites, linha)
+
+		if err_leitor == io.EOF { //io.EOF indica que é o fim do arquivo, usado para fazer um break na leitura do arquivo
+			break
+		}
+
+	}
+
+	file.Close()
 
 	return sites
 }
