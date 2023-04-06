@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -16,7 +17,6 @@ const delay = 5
 func main() {
 
 	intro()
-	registerLog("site-falso", false)
 	for {
 		showMenu()
 		command := readCommand()
@@ -120,11 +120,14 @@ func readSitesFile() []string {
 }
 
 func registerLog(site string, code bool) {
-	arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_RDWR, 0666)
+	arquivo, err := os.OpenFile("log.txt", os.O_CREATE|os.O_APPEND|os.O_RDWR, 0666)
 
 	if err != nil {
 		fmt.Println(err)
 	}
 
+	arquivo.WriteString(site + "- online: " + strconv.FormatBool(code) + "\n")
+
 	fmt.Println(arquivo)
+	arquivo.Close()
 }
