@@ -10,7 +10,8 @@ type ContaCorrente struct { // estrutura == classe
 }
 
 func main() {
-
+	//conta1 := ContaCorrente{titular: "guilherm", numAgencia: 589, numConta: 5, saldo: 123.45} forma não obriga passar todos os params
+	//conta1 := ContaCorrente{"guilherm", 589, 5, 123.45} forma obriga passar todos os params
 	conta1 := ContaCorrente{}
 	conta1.titular = "Guilherme"
 	conta1.numAgencia = 568
