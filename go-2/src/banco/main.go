@@ -29,16 +29,30 @@ func (c *ContaCorrente) depositar(dep float64) (string, float64) {
 
 }
 
+func (c *ContaCorrente) transferir(valor float64, dest *ContaCorrente) bool {
+	if valor < 0 {
+		fmt.Println("Não é permitido valores negativos!")
+		return false
+	} else {
+		if valor < c.saldo {
+			c.saldo -= valor
+			dest.saldo += valor
+
+			return true
+		} else {
+			fmt.Println("Saldo insuficiente!")
+			return false
+		}
+	}
+}
+
 func main() {
 	//conta1 := ContaCorrente{titular: "guilherm", numAgencia: 589, numConta: 5, saldo: 123.45} forma não obriga passar todos os params
 	//conta1 := ContaCorrente{"guilherm", 589, 5, 123.45} forma obriga passar todos os params
-	conta1 := ContaCorrente{}
-	conta1.numConta = 05
-	conta1.saldo = 123.35
+	conta1 := ContaCorrente{titular: "Vitor", saldo: 1000}
+	conta2 := ContaCorrente{titular: "Sara", saldo: 6000}
 
-	// fmt.Println(conta1.saldo)
-	// fmt.Println(conta1.sacar(120))
-	// fmt.Println(conta1.saldo)
-	fmt.Println(conta1.saldo)
-	fmt.Println(conta1.depositar(5000))
+	fmt.Println(conta1, conta2)
+	status := conta1.transferir(100, &conta2)
+	fmt.Println(status, conta1, conta2)
 }
