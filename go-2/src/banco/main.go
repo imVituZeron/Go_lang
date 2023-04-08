@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	c "pack.com/banco/contas" // o "c" é uma apelido para os import
+	c "pack.com/go-2/pkg/contas" // o "c" é uma apelido para os import
 )
 
 func main() {
