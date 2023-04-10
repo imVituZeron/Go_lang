@@ -1,19 +1,23 @@
 package contas
 
-import "fmt"
+import (
+	"fmt"
+
+	c "pack.com/go-2/pkg/clientes"
+)
 
 // Sempre que quiser deixar visivel os atributos e métodos só começar com a primeira letra maiuscula
 type ContaCorrente struct { // estrutura == classe
-	Titular    string
+	Titular    c.Titular
 	NumAgencia int
 	NumConta   int
-	Saldo      float64
+	saldo      float64
 }
 
 func (c *ContaCorrente) Sacar(saque float64) string {
-	positivo := saque > 0 && saque < c.Saldo
+	positivo := saque > 0 && saque < c.saldo
 	if positivo {
-		c.Saldo -= saque
+		c.saldo -= saque
 		return "saque feito com sucesso!"
 	} else {
 		return "Saldo insuficiente!"
@@ -22,10 +26,10 @@ func (c *ContaCorrente) Sacar(saque float64) string {
 
 func (c *ContaCorrente) Depositar(dep float64) (string, float64) {
 	if dep > 0 {
-		c.Saldo += dep
-		return "Deposito feito com sucesso!", c.Saldo
+		c.saldo += dep
+		return "Deposito feito com sucesso!", c.saldo
 	} else {
-		return "Não é permitido deposito de valores negativos!", c.Saldo
+		return "Não é permitido deposito de valores negativos!", c.saldo
 	}
 
 }
@@ -35,9 +39,9 @@ func (c *ContaCorrente) Transferir(valor float64, dest *ContaCorrente) bool {
 		fmt.Println("Não é permitido valores negativos!")
 		return false
 	} else {
-		if valor < c.Saldo {
-			c.Saldo -= valor
-			dest.Saldo += valor
+		if valor < c.saldo {
+			c.saldo -= valor
+			dest.saldo += valor
 
 			return true
 		} else {
@@ -45,4 +49,8 @@ func (c *ContaCorrente) Transferir(valor float64, dest *ContaCorrente) bool {
 			return false
 		}
 	}
+}
+
+func (c *ContaCorrente) Visulizar() float64 {
+	return c.saldo
 }
