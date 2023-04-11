@@ -8,10 +8,9 @@ import (
 
 // Sempre que quiser deixar visivel os atributos e métodos só começar com a primeira letra maiuscula
 type ContaCorrente struct { // estrutura == classe
-	Titular    c.Titular
-	NumAgencia int
-	NumConta   int
-	saldo      float64
+	Titular              c.Titular
+	NumAgencia, NumConta int
+	saldo                float64
 }
 
 func (c *ContaCorrente) Sacar(saque float64) string {
