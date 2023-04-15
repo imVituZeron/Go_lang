@@ -1,17 +1,21 @@
 package main
 
 import (
+	"database/sql"
 	"html/template"
 	"net/http"
 
+	_ "github.com/lib/pq"
 	prod "pack.com/loja/pkg/produtos"
 )
 
 var temp = template.Must(template.ParseGlob("./templates/*.html"))
 
 func main() {
+	db := conectDb()
 	http.HandleFunc("/", index)
 	http.ListenAndServe(":9001", nil)
+	defer db.Close()
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
@@ -23,4 +27,12 @@ func index(w http.ResponseWriter, r *http.Request) {
 	}
 
 	temp.ExecuteTemplate(w, "index", produtos)
+}
+func conectDb() *sql.DB {
+	conexao := "user=postgres dbname=alura_loja password=root host=localhost sslmode=disable"
+	db, err := sql.Open("postgres", conexao)
+	if err != nil {
+		panic(err.Error())
+	}
+	return db
 }
