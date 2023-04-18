@@ -13,3 +13,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	allProduct := prod.BringAllProduct()
 	temp.ExecuteTemplate(w, "index", allProduct)
 }
+
+func New(w http.ResponseWriter, r *http.Request) {
+	temp.ExecuteTemplate(w, "new", nil)
+}
