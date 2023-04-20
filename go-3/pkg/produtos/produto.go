@@ -1,6 +1,8 @@
 package produtos
 
 import (
+	"fmt"
+
 	data "pack.com/loja/pkg/db"
 )
 
@@ -41,4 +43,17 @@ func BringAllProduct() []Produto {
 	}
 	defer db.Close()
 	return produtos
+}
+
+func CreateNewProduct(nome string, desc string, preco float64, quant int) {
+	db := data.ConectDb()
+	query := "INSERT INTO produtos(nome, descricao, preco, quantidade) VALUES ($1,$2,$3,$4);"
+
+	insertDataInBase, err := db.Prepare(query)
+	if err != nil {
+		fmt.Println("ocorreu um erro: ", err)
+	}
+
+	insertDataInBase.Exec(nome, desc, preco, quant)
+	defer db.Close()
 }
