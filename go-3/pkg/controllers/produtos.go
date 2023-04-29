@@ -9,7 +9,7 @@ import (
 	prod "pack.com/loja/pkg/produtos"
 )
 
-var temp = template.Must(template.ParseGlob("./templates/*.html"))
+var temp = template.Must(template.ParseGlob("./src/templates/*.html"))
 
 func Index(w http.ResponseWriter, r *http.Request) {
 	allProduct := prod.BringAllProduct()
@@ -46,4 +46,10 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	idProduct := r.URL.Query().Get("id")
 	prod.DeleteProduct(idProduct)
 	http.Redirect(w, r, "/", 301)
+}
+
+func Edit(w http.ResponseWriter, r *http.Request) {
+	idProduto := r.URL.Query().Get("id")
+	produto := prod.EditaProduto(idProduto)
+	temp.ExecuteTemplate(w, "Edit", produto)
 }
