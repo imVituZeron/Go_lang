@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -52,4 +53,32 @@ func Edit(w http.ResponseWriter, r *http.Request) {
 	idProduto := r.URL.Query().Get("id")
 	produto := prod.EditaProduto(idProduto)
 	temp.ExecuteTemplate(w, "Edit", produto)
+}
+
+func Update(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		id := r.FormValue("id")
+		nome := r.FormValue("nome")
+		descricao := r.FormValue("descricao")
+		preco := r.FormValue("preco")
+		quantidade := r.FormValue("quantidade")
+
+		convertId, err := strconv.Atoi(id)
+		if err != nil {
+			log.Println("Erro na conversao do ID :", err)
+		}
+
+		convertPreco, err := strconv.ParseFloat(preco, 64)
+		if err != nil {
+			log.Println("Erro na conversao do Preço :", err)
+		}
+
+		convertQuant, err := strconv.Atoi(quantidade)
+		if err != nil {
+			log.Println("Erro na conversao do Quantidade :", err)
+		}
+
+		prod.UpdateProduct(convertId, convertQuant, nome, descricao, convertPreco)
+	}
+	http.Redirect(w, r, "/", 301)
 }

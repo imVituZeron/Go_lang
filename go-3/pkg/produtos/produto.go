@@ -16,7 +16,7 @@ type Produto struct {
 
 func BringAllProduct() []Produto {
 	db := data.ConectDb()
-	selectProduct, err := db.Query("SELECT * FROM produtos")
+	selectProduct, err := db.Query("SELECT * FROM produtos ORDER BY id ASC")
 	if err != nil {
 		panic(err.Error())
 	}
@@ -91,7 +91,7 @@ func EditaProduto(id string) Produto {
 		if err != nil {
 			panic(err.Error())
 		}
-
+		produtoPraAtualizar.Id = id
 		produtoPraAtualizar.Nome = nome
 		produtoPraAtualizar.Desc = descricao
 		produtoPraAtualizar.Preco = preco
@@ -100,4 +100,17 @@ func EditaProduto(id string) Produto {
 
 	defer db.Close()
 	return produtoPraAtualizar
+}
+
+func UpdateProduct(id, quantidade int, nome, descricao string, preco float64) {
+	db := data.ConectDb()
+
+	queryAtualizarProduto := "UPDATE produtos set nome=$1, descricao=$2, preco=$3, quandade=$4 WHERE id=$5"
+	query, err := db.Prepare(queryAtualizarProduto)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	query.Exec(nome, descricao, preco, quantidade, id)
+	defer db.Close()
 }

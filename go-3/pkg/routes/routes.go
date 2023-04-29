@@ -12,4 +12,5 @@ func LoadingRoutes() {
 	http.HandleFunc("/insert", control.Insert)
 	http.HandleFunc("/delete", control.Delete)
 	http.HandleFunc("/edit", control.Edit)
+	http.HandleFunc("/update ", control.Update)
 }
