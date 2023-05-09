@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"pack/api/database"
 	"pack/api/models"
-	"strconv"
 
 	"github.com/gorilla/mux"
 )
@@ -15,16 +15,17 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func ShowAllPersonas(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(models.Personalidades)
+	var P []models.Personalidade
+
+	database.DB.Find(&P)
+	json.NewEncoder(w).Encode(P)
 }
 
 func ShowPersona(w http.ResponseWriter, r *http.Request) {
 	value := mux.Vars(r)
 	id := value["id"]
+	var P models.Personalidade
 
-	for _, value := range models.Personalidades {
-		if strconv.Itoa(value.Id) == id {
-			json.NewEncoder(w).Encode(value)
-		}
-	}
+	database.DB.First(&P, id)
+	json.NewEncoder(w).Encode(P)
 }

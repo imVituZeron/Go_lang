@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 
+	"pack/api/database"
 	models "pack/api/models"
 	route "pack/api/routes"
 )
@@ -13,6 +14,7 @@ func main() {
 		{Id: 2, Nome: "nome 2", Historia: "historia 2"},
 	}
 
+	database.ConnectDb()
 	fmt.Println("Iniciando o servidore Rest com Go")
 	route.HandleRequest()
 }
