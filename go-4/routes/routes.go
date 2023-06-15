@@ -5,12 +5,14 @@ import (
 	"net/http"
 
 	control "pack/api/controller"
+	"pack/api/middleware"
 
 	"github.com/gorilla/mux"
 )
 
 func HandleRequest() {
 	r := mux.NewRouter()
+	r.Use(middleware.SetContenttype)
 	r.HandleFunc("/", control.Home)
 	r.HandleFunc("/api/personalidades", control.ShowAllPersonas).Methods("Get")
 	r.HandleFunc("/api/personalidades/{id}", control.ShowPersona).Methods("Get")
