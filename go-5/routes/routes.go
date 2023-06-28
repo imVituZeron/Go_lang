@@ -9,5 +9,6 @@ import (
 func HandleRequests() {
 	r := gin.Default()
 	r.GET("/alunos", C.ShowStudents)
+	r.GET("/:nome", C.Welcome)
 	r.Run(":5000")
 }
